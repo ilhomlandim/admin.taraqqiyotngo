@@ -7,8 +7,8 @@ import { TeamSwitcher } from "./TeamSwitcher";
 
 const data = {
   navMain: [
-    { title: "Projects", icon: ClipboardCheck },
-    { title: "Blog", icon: Library },
+    { title: "projects", icon: ClipboardCheck },
+    { title: "blog", icon: Library },
   ],
 };
 

@@ -1,6 +1,7 @@
 "use client"
 import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
+import Link from "next/link"
 
 export function NavMain({ items }) {
     return (
@@ -17,7 +18,7 @@ export function NavMain({ items }) {
                             <CollapsibleTrigger asChild>
                                 <SidebarMenuButton tooltip={item.title}>
                                     {item.icon && <item.icon />}
-                                    <span className="text-lg font-medium">{item.title}</span>
+                                    <Link href={item.title} className="text-lg font-medium capitalize">{item.title}</Link>
                                 </SidebarMenuButton>
                             </CollapsibleTrigger>
                         </SidebarMenuItem>
