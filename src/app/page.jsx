@@ -1,3 +1,8 @@
+import React from "react";
+
+export default function page() {
+  return <div>page</div>;
+
 "use client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
