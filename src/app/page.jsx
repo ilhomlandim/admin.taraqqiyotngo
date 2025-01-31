@@ -1,3 +1,5 @@
+import { ModeToggle } from "@/components/dark-mode";
+
 export default function page() {
-  return <div>Home</div>;
+  return <div><ModeToggle/></div>;
 }
