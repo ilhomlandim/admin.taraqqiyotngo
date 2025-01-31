@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Pencil, Trash2, Image, X } from "lucide-react";
 
-const InvoiceTable = () => {
+const Tablee = () => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -335,4 +335,4 @@ const InvoiceTable = () => {
   );
 };
 
-export default InvoiceTable;
+export default Tablee;

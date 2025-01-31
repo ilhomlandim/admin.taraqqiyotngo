@@ -1,9 +1,5 @@
-import InvoiceTable from "@/components/tablee";
+import React from "react";
 
 export default function page() {
-  return (
-    <div>
-      <InvoiceTable />
-    </div>
-  );
+  return <div>page</div>;
 }
