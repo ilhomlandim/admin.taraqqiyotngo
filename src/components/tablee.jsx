@@ -2,108 +2,11 @@
 import React, { useState } from "react";
 import { Pencil, Trash2, Image, X } from "lucide-react";
 
-const Tablee = () => {
+const Tablee = ({ data }) => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
-
-  const [newsData, setNewsData] = useState([
-    {
-      id: 1,
-      title: {
-        rus: "Республиканский центр «Тараккиёт НГО» запускает новый проект по очистке воды",
-        eng: "The Republican Center 'Taraqqiyot NGO' launches new water purification project",
-        uzb: "Taraqqiyot NGO' respublika markazi yangi suv tozalash loyihasini ishga tushirmoqda",
-      },
-      body: {
-        rus: `Республиканский центр «Тараккиёт НГО» объявил о запуске нового проекта по очистке воды в Ферганской области. Проект направлен на улучшение качества питьевой воды в сельских районах. В рамках инициативы планируется установка современных систем очистки воды в 15 селах региона.`,
-        eng: `The Republican Center 'Taraqqiyot NGO' has announced the launch of a new water purification project in the Fergana region. The project aims to improve drinking water quality in rural areas. The initiative plans to install modern water purification systems in 15 villages across the region.`,
-        uzb: `'Taraqqiyot NGO' respublika markazi Farg'ona viloyatida yangi suv tozalash loyihasini ishga tushirilishi haqida e'lon qildi. Loyiha qishloq hududlarida ichimlik suvi sifatini yaxshilashga qaratilgan. Tashabbus doirasida mintaqadagi 15 ta qishloqda zamonaviy suv tozalash tizimlarini o'rnatish rejalashtirilgan.`,
-      },
-      date: "15.01.2025",
-      images: [
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-      ],
-    },
-    {
-      id: 2,
-      title: {
-        rus: "Завершен первый этап установки водопроводных систем в Наманганской области",
-        eng: "First phase of water supply system installation completed in Namangan region",
-        uzb: "Namangan viloyatida suv ta'minoti tizimini o'rnatishning birinchi bosqichi yakunlandi",
-      },
-      body: {
-        rus: `«Тараккиёт НГО» успешно завершил первый этап установки водопроводных систем в трех районах Наманганской области. Более 1000 домохозяйств теперь имеют доступ к чистой питьевой воде. Проект реализуется при поддержке международных партнеров.`,
-        eng: `'Taraqqiyot NGO' has successfully completed the first phase of water supply system installation in three districts of Namangan region. Over 1,000 households now have access to clean drinking water. The project is being implemented with support from international partners.`,
-        uzb: `'Taraqqiyot NGO' Namangan viloyatining uch tumanida suv ta'minoti tizimini o'rnatishning birinchi bosqichini muvaffaqiyatli yakunladi. 1000 dan ortiq xonadon endi toza ichimlik suviga ega bo'ldi. Loyiha xalqaro hamkorlar ko'magida amalga oshirilmoqda.`,
-      },
-      date: "20.01.2025",
-      images: [
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-      ],
-    },
-    {
-      id: 3,
-      title: {
-        rus: "Проведен семинар по водосбережению для местных жителей",
-        eng: "Water conservation seminar held for local residents",
-        uzb: "Mahalliy aholi uchun suvni tejash bo'yicha seminar o'tkazildi",
-      },
-      body: {
-        rus: `В Андижанской области прошел обучающий семинар по эффективному использованию водных ресурсов. Эксперты «Тараккиёт НГО» поделились практическими советами по водосбережению с местными жителями. В мероприятии приняли участие более 200 человек.`,
-        eng: `A training seminar on efficient water resource usage was held in Andijan region. Experts from 'Taraqqiyot NGO' shared practical water conservation tips with local residents. More than 200 people participated in the event.`,
-        uzb: `Andijon viloyatida suv resurslaridan samarali foydalanish bo'yicha o'quv seminari bo'lib o'tdi. 'Taraqqiyot NGO' mutaxassislari mahalliy aholi bilan suvni tejash bo'yicha amaliy maslahatlar almashdilar. Tadbirda 200 dan ortiq kishi ishtirok etdi.`,
-      },
-      date: "22.01.2025",
-      images: [
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-      ],
-    },
-    {
-      id: 4,
-      title: {
-        rus: "«Тараккиёт НГО» расширяет географию своей деятельности",
-        eng: "'Taraqqiyot NGO' expands its geographical coverage",
-        uzb: "'Taraqqiyot NGO' o'z faoliyati geografiyasini kengaytirmoqda",
-      },
-      body: {
-        rus: `Организация объявила о планах расширения своей деятельности на новые районы Ферганской долины. В 2025 году планируется охватить дополнительно 10 сельских районов программами по улучшению водоснабжения. Проект получил одобрение местных властей.`,
-        eng: `The organization has announced plans to expand its activities to new districts in the Fergana Valley. In 2025, they plan to cover 10 additional rural areas with water supply improvement programs. The project has received approval from local authorities.`,
-        uzb: `Tashkilot Farg'ona vodiysining yangi tumanlariga o'z faoliyatini kengaytirish rejalarini e'lon qildi. 2025 yilda suv ta'minotini yaxshilash dasturlari bilan qo'shimcha 10 ta qishloq tumani qamrab olinishi rejalashtirilmoqda. Loyiha mahalliy hokimiyat tomonidan ma'qullandi.`,
-      },
-      date: "23.01.2025",
-      images: [
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-      ],
-    },
-    {
-      id: 5,
-      title: {
-        rus: "Республиканский центр «Тараккиёт НГО» продолжает деятельность по реализации проекта",
-        eng: "The Republican Center 'Taraqqiyot NGO' continues its project implementation activities",
-        uzb: "'Taraqqiyot NGO' respublika markazi loyihani amalga oshirish faoliyatini davom ettirmoqda",
-      },
-      body: {
-        rus: `Сегодня, 25 января 2025 года, состоялся активный круглый стол с участием представителей организации "Тараққиёт NGO" и жителей махаллей "Абдувай", "Янгиқурғон" и "Қашқар" Бешарыкского района по вопросу эффективного обеспечения населения этих махаллей чистой питьевой водой.`,
-        eng: `Today, January 25, 2025, an active roundtable discussion was held with the participation of representatives from "Taraqqiyot NGO" and residents of the "Abduvay," "Yangiqurghon," and "Qashqar" mahallas in the Besharik district to address the issue of efficiently providing clean drinking water to the residents of these mahallas.`,
-        uzb: `Bugun, 2025-yil 25-yanvar kuni, "Taraqqiyot NGO" tashkiloti vakillari va Beshariq tumanining "Abduvay", "Yangiqurghon" va "Qashqar" mahalla fuqarolari ishtirokida ushbu mahallalar aholisi uchun toza ichimlik suvini samarali yetkazib berish masalasida faol davra suhbati bo'lib o'tdi.`,
-      },
-      date: "25.01.2025",
-      images: [
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-        "https://picsum.photos/800/600",
-      ],
-    },
-    // Yana obyektlar qo'shishingiz mumkin
-  ]);
 
   const handleEdit = (item) => {
     console.log(item);
@@ -115,10 +18,8 @@ const Tablee = () => {
   };
 
   const handleDeleteConfirm = () => {
-    setNewsData((prevData) =>
-      prevData.filter((item) => item.id !== itemToDelete.id)
-    );
     setDeleteModalOpen(false);
+    console.log(itemToDelete);
   };
 
   const handleDeleteCancel = () => {
@@ -130,35 +31,26 @@ const Tablee = () => {
       {/* Jadval */}
       <div className=" rounded-lg shadow-sm overflow-hidden">
         <div className="p-4 border-b ">
-          <h2 className="text-xl font-bold">
-            Yangiliklar Boshqaruvi
-          </h2>
+          <h2 className="text-xl font-bold">Yangiliklar Boshqaruvi</h2>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className=" border-b ">
-                <th className="p-3 text-left text-sm font-semibold">
-                  Sana
-                </th>
+                <th className="p-3 text-left text-sm font-semibold">Sana</th>
                 <th className="p-3 text-left text-sm font-semibold">
                   Sarlavha
                 </th>
-                <th className="p-3 text-left text-sm font-semibold">
-                  Rasmlar
-                </th>
+                <th className="p-3 text-left text-sm font-semibold">Rasmlar</th>
                 <th className="w-20 p-3 text-center text-sm font-semibold">
                   Harakatlar
                 </th>
               </tr>
             </thead>
             <tbody>
-              {newsData.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b transition-colors"
-                >
+              {data.map((item) => (
+                <tr key={item.id} className="border-b transition-colors">
                   <td className="p-3 text-sm">{item.date}</td>
                   <td className="p-3 max-w-md">
                     <button
@@ -221,9 +113,7 @@ const Tablee = () => {
         <div className="fixed inset-0 text-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-gray-50 rounded-lg max-w-2xl w-full m-4 max-h-[90vh] overflow-y-auto shadow-lg">
             <div className="p-4 border-b  flex justify-between items-center">
-              <h3 className="text-xl font-bold">
-                Yangilik Tafsilotlari
-              </h3>
+              <h3 className="text-xl font-bold">Yangilik Tafsilotlari</h3>
               <button
                 onClick={() => setSelectedContent(null)}
                 className="p-1.5 hover:bg-red-400 rounded-md hover:text-gray-700 transition-colors"
@@ -234,9 +124,7 @@ const Tablee = () => {
             <div className="p-4 space-y-4">
               {/* uz */}
               <div>
-                <h4 className="font-semibold mb-1 text-sm ">
-                  uz O'zbek
-                </h4>
+                <h4 className="font-semibold mb-1 text-sm ">uz O'zbek</h4>
                 <div className="space-y-1">
                   <div className="font-medium text-sm break-words">
                     {selectedContent.title.uzb}
@@ -248,30 +136,22 @@ const Tablee = () => {
               </div>
               {/* eng */}
               <div>
-                <h4 className="font-semibold mb-1 text-sm">
-                  eng English
-                </h4>
+                <h4 className="font-semibold mb-1 text-sm">eng English</h4>
                 <div className="space-y-1">
                   <div className="font-medium text-sm  break-words">
                     {selectedContent.title.eng}
                   </div>
-                  <div className="text-sm ">
-                    {selectedContent.body.eng}
-                  </div>
+                  <div className="text-sm ">{selectedContent.body.eng}</div>
                 </div>
               </div>
               {/* rus */}
               <div>
-                <h4 className="font-semibold mb-1 text-sm">
-                  ru Русский
-                </h4>
+                <h4 className="font-semibold mb-1 text-sm">ru Русский</h4>
                 <div className="space-y-1">
                   <div className="font-medium text-sm 0 break-words">
                     {selectedContent.title.rus}
                   </div>
-                  <div className="text-sm">
-                    {selectedContent.body.rus}
-                  </div>
+                  <div className="text-sm">{selectedContent.body.rus}</div>
                 </div>
               </div>
             </div>
@@ -311,9 +191,7 @@ const Tablee = () => {
                 <X size={20} />
               </button>
             </div>
-            <p className="mb-4 text-sm">
-              Haqiqatan ham o'chirmoqchimisiz?
-            </p>
+            <p className="mb-4 text-sm">Haqiqatan ham o'chirmoqchimisiz?</p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={handleDeleteCancel}
