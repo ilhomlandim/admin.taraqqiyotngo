@@ -35,7 +35,10 @@ export default function LoginPage() {
 
     try {
       const user = await login({ username, password }).unwrap();
-      localStorage.setItem("token", user.token);
+      localStorage.setItem("access_token", user.access_token);
+      localStorage.setItem("refresh_token", user.refresh_token);
+
+      console.log(user)
       toast.success("Login successful!", { position: "top-right" });
 
       setTimeout(() => {
