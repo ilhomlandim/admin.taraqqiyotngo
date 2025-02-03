@@ -3,6 +3,7 @@ import "./globals.css";
 import ThemeProvider from "@/components/theme-provider";
 import Providers from "./providers";
 import LayoutWrapper from "@/components/layoutWrapper";
+import Main from "@/components/Main";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <Providers>
-            <LayoutWrapper>{children}</LayoutWrapper>
+            <LayoutWrapper>
+              <Main children={children} />
+            </LayoutWrapper>
           </Providers>
         </ThemeProvider>
       </body>
