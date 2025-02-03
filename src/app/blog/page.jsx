@@ -1,10 +1,13 @@
 "use client";
+import ProtectedRoute from "@/components/ProdectedRoute";
 import Tablee from "@/components/tablee";
-import { useGetBlogsQuery } from "@/redux/api/authApi";
+import { useDeleteBlogsMutation, useGetBlogsQuery } from "@/redux/api/authApi";
 import React from "react";
 
 const BlogPage = () => {
   const { data, error, isLoading } = useGetBlogsQuery();
+  const [deleteBlogs, { error: deleteError, isLoading: isDeleting }] =
+    useDeleteBlogsMutation();
 
   if (isLoading) {
     return (
@@ -26,7 +29,9 @@ const BlogPage = () => {
 
   return (
     <div>
-      <Tablee data={data} />
+      <ProtectedRoute>
+        <Tablee data={data.data} onDelete={deleteBlogs} />
+      </ProtectedRoute>
     </div>
   );
 };

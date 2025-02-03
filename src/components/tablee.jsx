@@ -1,15 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { Pencil, Trash2, Image, X } from "lucide-react";
+import { Toaster, toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { authApi } from "@/redux/api/authApi";
 
-const Tablee = ({ data }) => {
+const Tablee = ({ data, onDelete }) => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const dispatch = useDispatch();
 
   const handleEdit = (item) => {
-    console.log(item);
+    if (false) {
+      console.log(item);
+    } else {
+      toast.info("Tahrirlash imkoniyati hozirda ishga tushirilmagan");
+    }
   };
 
   const handleDeleteClick = (item) => {
@@ -17,27 +25,36 @@ const Tablee = ({ data }) => {
     setDeleteModalOpen(true);
   };
 
-  const handleDeleteConfirm = () => {
-    setDeleteModalOpen(false);
-    console.log(itemToDelete);
+  const handleDeleteConfirm = async () => {
+    if (itemToDelete) {
+      try {
+        setDeleteModalOpen(false);
+        await onDelete(itemToDelete.id).unwrap();
+        toast.success(`${itemToDelete.title.uzb} o'chirildi`);
+        dispatch(authApi.util.resetApiState());
+      } catch (error) {
+        setDeleteModalOpen(false);
+        toast.error("Qayta urinib ko'ring xatolik");
+      }
+    }
   };
-
   const handleDeleteCancel = () => {
     setDeleteModalOpen(false);
   };
 
   return (
     <div className="p-4 min-h-screen">
-      {/* Jadval */}
-      <div className=" rounded-lg shadow-sm overflow-hidden">
-        <div className="p-4 border-b ">
+      <Toaster position="top-right" />
+
+      <div className="rounded-lg shadow-sm overflow-hidden">
+        <div className="p-4 border-b">
           <h2 className="text-xl font-bold">Yangiliklar Boshqaruvi</h2>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className=" border-b ">
+              <tr className="border-b">
                 <th className="p-3 text-left text-sm font-semibold">Sana</th>
                 <th className="p-3 text-left text-sm font-semibold">
                   Sarlavha
@@ -55,7 +72,7 @@ const Tablee = ({ data }) => {
                   <td className="p-3 max-w-md">
                     <button
                       onClick={() => setSelectedContent(item)}
-                      className="text-left hover:text-blue-300  w-full"
+                      className="text-left hover:text-blue-300 w-full"
                     >
                       <div className="font-medium truncate">
                         {item.title.uzb}
@@ -72,12 +89,12 @@ const Tablee = ({ data }) => {
                         >
                           <img
                             src={img}
-                            alt={`img`}
+                            alt={`img ${idx + 1}`}
                             className="w-12 h-12 object-cover rounded-md shadow-sm"
                           />
                           <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-40 transition-all rounded-md flex items-center justify-center">
                             <Image
-                              className=" opacity-0 group-hover:opacity-100"
+                              className="opacity-0 group-hover:opacity-100"
                               size={16}
                             />
                           </div>
@@ -89,13 +106,13 @@ const Tablee = ({ data }) => {
                     <div className="flex justify-center gap-2">
                       <button
                         onClick={() => handleEdit(item)}
-                        className="p-1.5 hover:bg-blue-200 rounded-md  hover:text-blue-600 transition-colors"
+                        className="p-1.5 hover:bg-blue-200 rounded-md hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />
                       </button>
                       <button
                         onClick={() => handleDeleteClick(item)}
-                        className="p-1.5 hover:bg-red-200 rounded-md  hover:text-red-600 transition-colors"
+                        className="p-1.5 hover:bg-red-200 rounded-md hover:text-red-600 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -108,11 +125,11 @@ const Tablee = ({ data }) => {
         </div>
       </div>
 
-      {/* content modal */}
+      {/* Yangilik tafsilotlari modali */}
       {selectedContent && (
         <div className="fixed inset-0 text-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-gray-50 rounded-lg max-w-2xl w-full m-4 max-h-[90vh] overflow-y-auto shadow-lg">
-            <div className="p-4 border-b  flex justify-between items-center">
+            <div className="p-4 border-b flex justify-between items-center">
               <h3 className="text-xl font-bold">Yangilik Tafsilotlari</h3>
               <button
                 onClick={() => setSelectedContent(null)}
@@ -122,44 +139,32 @@ const Tablee = ({ data }) => {
               </button>
             </div>
             <div className="p-4 space-y-4">
-              {/* uz */}
-              <div>
-                <h4 className="font-semibold mb-1 text-sm ">uz O'zbek</h4>
-                <div className="space-y-1">
-                  <div className="font-medium text-sm break-words">
-                    {selectedContent.title.uzb}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {selectedContent.body.uzb}
+              {/* Tillar bo'yicha kontent */}
+              {["uzb", "eng", "rus"].map((lang) => (
+                <div key={lang}>
+                  <h4 className="font-semibold mb-1 text-sm">
+                    {lang === "uzb"
+                      ? "uz O'zbek"
+                      : lang === "eng"
+                      ? "eng English"
+                      : "ru Русский"}
+                  </h4>
+                  <div className="space-y-1">
+                    <div className="font-medium text-sm break-words">
+                      {selectedContent.title[lang]}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {selectedContent.body[lang]}
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* eng */}
-              <div>
-                <h4 className="font-semibold mb-1 text-sm">eng English</h4>
-                <div className="space-y-1">
-                  <div className="font-medium text-sm  break-words">
-                    {selectedContent.title.eng}
-                  </div>
-                  <div className="text-sm ">{selectedContent.body.eng}</div>
-                </div>
-              </div>
-              {/* rus */}
-              <div>
-                <h4 className="font-semibold mb-1 text-sm">ru Русский</h4>
-                <div className="space-y-1">
-                  <div className="font-medium text-sm 0 break-words">
-                    {selectedContent.title.rus}
-                  </div>
-                  <div className="text-sm">{selectedContent.body.rus}</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       )}
 
-      {/* image modal */}
+      {/* Rasm ko'rish modali */}
       {selectedImage && (
         <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
           <div className="relative max-w-3xl w-full mx-4">
@@ -178,20 +183,23 @@ const Tablee = ({ data }) => {
         </div>
       )}
 
-      {/* delete modal */}
+      {/* O'chirish modali */}
       {deleteModalOpen && (
         <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 text-black">
           <div className="bg-gray-50 rounded-lg p-4 max-w-sm w-full shadow-lg">
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-lg font-bold ">O'chirish</h3>
+              <h3 className="text-lg font-bold">O'chirish</h3>
               <button
                 onClick={handleDeleteCancel}
-                className="p-1.5 hover:bg-gray-100 rounded-md  hover:text-gray-700 transition-colors"
+                className="p-1.5 hover:bg-gray-100 rounded-md hover:text-gray-700 transition-colors"
               >
                 <X size={20} />
               </button>
             </div>
-            <p className="mb-4 text-sm">Haqiqatan ham o'chirmoqchimisiz?</p>
+            <p className="mb-4 text-sm">
+              Haqiqatan ham "{itemToDelete?.title.uzb}" yangilgini
+              o'chirmoqchimisiz?
+            </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={handleDeleteCancel}
@@ -201,7 +209,7 @@ const Tablee = ({ data }) => {
               </button>
               <button
                 onClick={handleDeleteConfirm}
-                className="px-4 py-1.5 bg-red-600 text-sm hover:bg-red-700 rounded-md transition-colors"
+                className="px-4 py-1.5 bg-red-600 text-white text-sm hover:bg-red-700 rounded-md transition-colors"
               >
                 Ha
               </button>

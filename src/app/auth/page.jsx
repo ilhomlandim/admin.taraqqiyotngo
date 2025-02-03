@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [login, { isLoading, error }] = useLoginMutation();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("access_token");
     if (token) {
       router.push("/");
     }
@@ -38,14 +38,16 @@ export default function LoginPage() {
       localStorage.setItem("access_token", user.access_token);
       localStorage.setItem("refresh_token", user.refresh_token);
 
-      console.log(user)
+      console.log(user);
       toast.success("Login successful!", { position: "top-right" });
 
       setTimeout(() => {
         router.push("/");
       }, 2000);
     } catch (err) {
-      toast.error("Login failed! username or password wrong.", { position: "top-right" });
+      toast.error("Login failed! username or password wrong.", {
+        position: "top-right",
+      });
     }
   };
 

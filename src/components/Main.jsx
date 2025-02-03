@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import { AppSidebar } from "@/components/Sidebar";
-import Test from "@/components/test";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -8,11 +7,21 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { UserCog2, Sun, Moon, Monitor, LogOut } from "lucide-react";
+import { UserCog2, LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ModeToggle } from "./dark-mode";
+import { useRouter } from "next/navigation";
 
-export default function Main({children}) {
+export default function Main({ children }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    router.push("/auth");
+    window.location.reload();
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -40,17 +49,20 @@ export default function Main({children}) {
             <Separator orientation="vertical" className="mr-2 h-4" />
           </div>
           <div className="relative dropdown-menu">
-            <SidebarMenuButton onClick={() => setDropdownOpen(!isDropdownOpen)}>
-              <UserCog2 />
-            </SidebarMenuButton>
+            <div className="flex gap-3">
+              <ModeToggle />
+              <SidebarMenuButton
+                onClick={() => setDropdownOpen(!isDropdownOpen)}
+              >
+                <UserCog2 />
+              </SidebarMenuButton>
+            </div>
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
-                <div className="flex justify-around p-2 border-b">
-                  <button><Sun /></button>
-                  <button><Moon /></button>
-                  <button><Monitor /></button>
-                </div>
-                <button className="w-full py-2 pe-2 ps-5 text-left hover:bg-gray-100 flex items-center gap-2">
+              <div className="absolute right-0 mt-2 w-40 border rounded shadow-lg">
+                <button
+                  className="w-full py-2 pe-2 ps-5 text-left  flex items-center gap-2"
+                  onClick={handleLogout}
+                >
                   <LogOut /> Log Out
                 </button>
               </div>
