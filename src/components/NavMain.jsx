@@ -22,10 +22,10 @@ export function NavMain({ items }) {
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
+                  <Link href={item.title}>{item.icon && <item.icon />}</Link>
                   <Link
                     href={item.title}
-                    className="text-lg font-medium capitalize"
+                    className="text-lg font-medium capitalize w-full"
                   >
                     {item.title}
                   </Link>

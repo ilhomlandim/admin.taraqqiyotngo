@@ -46,7 +46,7 @@ const BlogPage = () => {
             Qo‘shish
           </Button>
         </div>
-        <Tablee data={data.data} onDelete={deleteBlogs} onEditt={BlogEdit} />
+        <Tablee data={data.data} onDelete={deleteBlogs} onEdit={BlogEdit} />
       </ProtectedRoute>
     </div>
   );

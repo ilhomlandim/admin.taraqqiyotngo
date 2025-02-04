@@ -53,7 +53,7 @@ const ProjectPage = () => {
         <Tablee
           data={data.data}
           onDelete={deleteProjets}
-          onEditt={BlogProject}
+          onEdit={BlogProject}
         />
       </ProtectedRoute>
     </div>

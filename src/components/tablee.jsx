@@ -5,7 +5,7 @@ import { Toaster, toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { authApi } from "@/redux/api/authApi";
 
-const Tablee = ({ data, onDelete, onEditt }) => {
+const Tablee = ({ data, onDelete, onEdit }) => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -14,7 +14,7 @@ const Tablee = ({ data, onDelete, onEditt }) => {
 
   const handleEdit = (item) => {
     if (true) {
-      onEditt(item);
+      onEdit(item);
     } else {
       toast.info("Tahrirlash imkoniyati hozirda ishga tushirilmagan");
     }
@@ -172,7 +172,10 @@ const Tablee = ({ data, onDelete, onEditt }) => {
       )}
       {/* Rasm ko'rish modali */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
+        <div
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50"
+        >
           <div className="relative max-w-3xl w-full mx-4">
             <button
               onClick={() => setSelectedImage(null)}
@@ -184,6 +187,7 @@ const Tablee = ({ data, onDelete, onEditt }) => {
               src={selectedImage}
               alt="Preview"
               className="w-full h-auto rounded-md shadow-lg"
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         </div>
