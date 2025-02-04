@@ -1,10 +1,16 @@
 "use client";
+import ProtectedRoute from "@/components/ProdectedRoute";
 import Tablee from "@/components/tablee";
-import { useGetProjectsQuery } from "@/redux/api/authApi";
+import {
+  useDeleteProjectsMutation,
+  useGetProjectsQuery,
+} from "@/redux/api/authApi";
 import React from "react";
 
 const ProjectPage = () => {
   const { data, error, isLoading } = useGetProjectsQuery();
+  const [deleteProjets, { error: deleteError, isLoading: isDeleting }] =
+    useDeleteProjectsMutation();
 
   if (isLoading) {
     return (
@@ -26,7 +32,9 @@ const ProjectPage = () => {
 
   return (
     <div>
-      <Tablee data={data} />
+      <ProtectedRoute>
+        <Tablee data={data.data} onDelete={deleteProjets} />
+      </ProtectedRoute>
     </div>
   );
 };

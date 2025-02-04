@@ -1,7 +1,12 @@
 "use client";
 import * as React from "react";
 import { ClipboardCheck, Library } from "lucide-react";
-import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarRail,
+} from "@/components/ui/sidebar";
 import { NavMain } from "./NavMain";
 import { TeamSwitcher } from "./TeamSwitcher";
 
