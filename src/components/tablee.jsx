@@ -175,7 +175,7 @@ const Tablee = ({ data, onDelete }) => {
       )}
       {/* Rasm ko'rish modali */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
+        <div onClick={() => setSelectedImage(null)} className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
           <div className="relative max-w-3xl w-full mx-4">
             <button
               onClick={() => setSelectedImage(null)}
@@ -187,6 +187,7 @@ const Tablee = ({ data, onDelete }) => {
               src={selectedImage}
               alt="Preview"
               className="w-full h-auto rounded-md shadow-lg"
+              onClick={(e) => e.stopPropagation()} 
             />
           </div>
         </div>

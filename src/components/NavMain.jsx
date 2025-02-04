@@ -25,7 +25,7 @@ export function NavMain({ items }) {
                   {item.icon && <item.icon />}
                   <Link
                     href={item.title}
-                    className="text-lg font-medium capitalize"
+                    className="text-lg font-medium capitalize w-full"
                   >
                     {item.title}
                   </Link>
