@@ -43,6 +43,7 @@ export default function LoginPage() {
 
       setTimeout(() => {
         router.push("/");
+        window.location.reload();
       }, 2000);
     } catch (err) {
       toast.error("Login failed! username or password wrong.", {

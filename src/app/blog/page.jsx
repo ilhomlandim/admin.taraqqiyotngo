@@ -1,6 +1,7 @@
 "use client";
 import ProtectedRoute from "@/components/ProdectedRoute";
 import Tablee from "@/components/tablee";
+import { Button } from "@/components/ui/button";
 import { useDeleteBlogsMutation, useGetBlogsQuery } from "@/redux/api/authApi";
 import React from "react";
 
@@ -27,10 +28,25 @@ const BlogPage = () => {
     );
   }
 
+  function AddBlog() {
+    console.log("ishlayapdi");
+  }
+  function BlogEdit(data) {
+    console.log("blog edit: ", data);
+  }
   return (
     <div>
       <ProtectedRoute>
-        <Tablee data={data.data} onDelete={deleteBlogs} />
+        <div className="p-4 border-b flex justify-between items-center">
+          <h2 className="text-xl font-bold">Blog Boshqaruvi</h2>
+          <Button
+            className="px-6 py-4 rounded-lg shadow-md transition"
+            onClick={() => AddBlog()}
+          >
+            Qo‘shish
+          </Button>
+        </div>
+        <Tablee data={data.data} onDelete={deleteBlogs} onEdit={BlogEdit} />
       </ProtectedRoute>
     </div>
   );

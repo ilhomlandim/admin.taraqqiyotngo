@@ -5,7 +5,7 @@ import { Toaster, toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { authApi } from "@/redux/api/authApi";
 
-const Tablee = ({ data, onDelete }) => {
+const Tablee = ({ data, onDelete, onEdit }) => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -13,8 +13,8 @@ const Tablee = ({ data, onDelete }) => {
   const dispatch = useDispatch();
 
   const handleEdit = (item) => {
-    if (false) {
-      console.log(item);
+    if (true) {
+      onEdit(item);
     } else {
       toast.info("Tahrirlash imkoniyati hozirda ishga tushirilmagan");
     }
@@ -26,18 +26,20 @@ const Tablee = ({ data, onDelete }) => {
   };
 
   const handleDeleteConfirm = async () => {
-    if (itemToDelete) {
+    if (itemToDelete?.title) {
       try {
         setDeleteModalOpen(false);
-        await onDelete(itemToDelete.id).unwrap();
-        toast.success(`${itemToDelete.title.uzb} o'chirildi`);
-        dispatch(authApi.util.resetApiState());
+        await onDelete(itemToDelete.id);
+        const title = itemToDelete?.title?.uz || "";
+        toast.success(`${title} o'chirildi`);
+        window.location.reload();
       } catch (error) {
         setDeleteModalOpen(false);
-        toast.error("Qayta urinib ko'ring xatolik");
+        toast.error("Qayta urinib ko'ring, xatolik yuz berdi");
       }
     }
   };
+
   const handleDeleteCancel = () => {
     setDeleteModalOpen(false);
   };
@@ -45,12 +47,7 @@ const Tablee = ({ data, onDelete }) => {
   return (
     <div className="p-4 min-h-screen">
       <Toaster position="top-right" />
-
       <div className="rounded-lg shadow-sm overflow-hidden">
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-bold">Yangiliklar Boshqaruvi</h2>
-        </div>
-
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -71,13 +68,13 @@ const Tablee = ({ data, onDelete }) => {
                   <td className="p-3 text-sm">{item.date ?? "malumot yo'q"}</td>
                   <td className="p-3 max-w-md">
                     {item.title &&
-                    (item.title.uzb || item.title.rus || item.title.eng) ? (
+                    (item.title.uz || item.title.ru || item.title.en) ? (
                       <button
                         onClick={() => setSelectedContent(item)}
                         className="text-left hover:text-blue-300 w-full"
                       >
                         <div className="font-medium truncate">
-                          {item.title.uzb || item.title.rus || item.title.eng}
+                          {item.title.uz || item.title.ru || item.title.en}
                         </div>
                       </button>
                     ) : (
@@ -150,13 +147,13 @@ const Tablee = ({ data, onDelete }) => {
               </button>
             </div>
             <div className="p-4 space-y-4">
-              {["uzb", "eng", "rus"].map((lang) => (
+              {["uz", "en", "ru"].map((lang) => (
                 <div key={lang}>
                   <h4 className="font-semibold mb-1 text-sm">
-                    {lang === "uzb"
+                    {lang === "uz"
                       ? "uz O'zbek"
-                      : lang === "eng"
-                      ? "eng English"
+                      : lang === "en"
+                      ? "en English"
                       : "ru Русский"}
                   </h4>
                   <div className="space-y-1">
@@ -175,7 +172,10 @@ const Tablee = ({ data, onDelete }) => {
       )}
       {/* Rasm ko'rish modali */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
+        <div
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50"
+        >
           <div className="relative max-w-3xl w-full mx-4">
             <button
               onClick={() => setSelectedImage(null)}
@@ -187,6 +187,7 @@ const Tablee = ({ data, onDelete }) => {
               src={selectedImage}
               alt="Preview"
               className="w-full h-auto rounded-md shadow-lg"
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         </div>
@@ -204,10 +205,7 @@ const Tablee = ({ data, onDelete }) => {
                 <X size={20} />
               </button>
             </div>
-            <p className="mb-4 text-sm">
-              Haqiqatan ham "{itemToDelete?.title.uzb}" yangilgini
-              o'chirmoqchimisiz?
-            </p>
+            <p className="mb-4 text-sm">Haqiqatan ham o'chirmoqchimisiz?</p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={handleDeleteCancel}
