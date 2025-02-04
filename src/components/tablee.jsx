@@ -68,38 +68,49 @@ const Tablee = ({ data, onDelete }) => {
             <tbody>
               {data.map((item) => (
                 <tr key={item.id} className="border-b transition-colors">
-                  <td className="p-3 text-sm">{item.date}</td>
+                  <td className="p-3 text-sm">{item.date ?? "malumot yo'q"}</td>
                   <td className="p-3 max-w-md">
-                    <button
-                      onClick={() => setSelectedContent(item)}
-                      className="text-left hover:text-blue-300 w-full"
-                    >
-                      <div className="font-medium truncate">
-                        {item.title.uzb}
-                      </div>
-                    </button>
+                    {item.title &&
+                    (item.title.uzb || item.title.rus || item.title.eng) ? (
+                      <button
+                        onClick={() => setSelectedContent(item)}
+                        className="text-left hover:text-blue-300 w-full"
+                      >
+                        <div className="font-medium truncate">
+                          {item.title.uzb || item.title.rus || item.title.eng}
+                        </div>
+                      </button>
+                    ) : (
+                      <span className="text-gray-400 italic">
+                        Ma'lumot yo‘q
+                      </span>
+                    )}
                   </td>
                   <td className="p-3">
                     <div className="flex gap-2">
-                      {item.images.map((img, idx) => (
-                        <button
-                          key={idx}
-                          className="relative group"
-                          onClick={() => setSelectedImage(img)}
-                        >
-                          <img
-                            src={img}
-                            alt={`img ${idx + 1}`}
-                            className="w-12 h-12 object-cover rounded-md shadow-sm"
-                          />
-                          <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-40 transition-all rounded-md flex items-center justify-center">
-                            <Image
-                              className="opacity-0 group-hover:opacity-100"
-                              size={16}
+                      {item.images && item.images.length > 0 ? (
+                        item.images.map((img, idx) => (
+                          <button
+                            key={idx}
+                            className="relative group"
+                            onClick={() => setSelectedImage(img)}
+                          >
+                            <img
+                              src={img}
+                              alt={`img ${idx + 1}`}
+                              className="w-12 h-12 object-cover rounded-md shadow-sm"
                             />
-                          </div>
-                        </button>
-                      ))}
+                            <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-40 transition-all rounded-md flex items-center justify-center">
+                              <Image
+                                className="opacity-0 group-hover:opacity-100"
+                                size={16}
+                              />
+                            </div>
+                          </button>
+                        ))
+                      ) : (
+                        <p>Rasmlar mavjud emas</p>
+                      )}
                     </div>
                   </td>
                   <td className="p-3">
@@ -139,7 +150,6 @@ const Tablee = ({ data, onDelete }) => {
               </button>
             </div>
             <div className="p-4 space-y-4">
-              {/* Tillar bo'yicha kontent */}
               {["uzb", "eng", "rus"].map((lang) => (
                 <div key={lang}>
                   <h4 className="font-semibold mb-1 text-sm">
@@ -151,10 +161,10 @@ const Tablee = ({ data, onDelete }) => {
                   </h4>
                   <div className="space-y-1">
                     <div className="font-medium text-sm break-words">
-                      {selectedContent.title[lang]}
+                      {selectedContent?.title?.[lang] ?? "Sarlavha mavjud emas"}
                     </div>
                     <div className="text-sm text-gray-600">
-                      {selectedContent.body[lang]}
+                      {selectedContent?.body?.[lang] ?? "Matn mavjud emas"}
                     </div>
                   </div>
                 </div>
@@ -163,7 +173,6 @@ const Tablee = ({ data, onDelete }) => {
           </div>
         </div>
       )}
-
       {/* Rasm ko'rish modali */}
       {selectedImage && (
         <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
@@ -182,7 +191,6 @@ const Tablee = ({ data, onDelete }) => {
           </div>
         </div>
       )}
-
       {/* O'chirish modali */}
       {deleteModalOpen && (
         <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 text-black">
