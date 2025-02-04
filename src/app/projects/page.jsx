@@ -1,6 +1,7 @@
 "use client";
 import ProtectedRoute from "@/components/ProdectedRoute";
 import Tablee from "@/components/tablee";
+import { Button } from "@/components/ui/button";
 import {
   useDeleteProjectsMutation,
   useGetProjectsQuery,
@@ -30,10 +31,30 @@ const ProjectPage = () => {
     );
   }
 
+  function AddBlog() {
+    console.log("ishlayapdi");
+  }
+
+  function BlogProject(data) {
+    console.log("Project edit: ", data);
+  }
   return (
     <div>
       <ProtectedRoute>
-        <Tablee data={data.data} onDelete={deleteProjets} />
+        <div className="p-4 border-b flex justify-between items-center">
+          <h2 className="text-xl font-bold">Project Boshqaruvi</h2>
+          <Button
+            className="px-6 py-4 rounded-lg shadow-md transition"
+            onClick={() => AddBlog()}
+          >
+            Qo‘shish
+          </Button>
+        </div>
+        <Tablee
+          data={data.data}
+          onDelete={deleteProjets}
+          onEditt={BlogProject}
+        />
       </ProtectedRoute>
     </div>
   );
