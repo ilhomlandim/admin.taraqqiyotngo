@@ -1,4 +1,5 @@
 "use client";
+import Modal from "@/components/Modal";
 import ProtectedRoute from "@/components/ProdectedRoute";
 import Tablee from "@/components/tablee";
 import { Button } from "@/components/ui/button";
@@ -6,9 +7,10 @@ import {
   useDeleteProjectsMutation,
   useGetProjectsQuery,
 } from "@/redux/api/authApi";
-import React from "react";
+import React, { useState } from "react";
 
 const ProjectPage = () => {
+  const [openModal, setOpenModal] = useState(false);
   const { data, error, isLoading } = useGetProjectsQuery();
   const [deleteProjets, { error: deleteError, isLoading: isDeleting }] =
     useDeleteProjectsMutation();
@@ -31,10 +33,6 @@ const ProjectPage = () => {
     );
   }
 
-  function AddBlog() {
-    console.log("ishlayapdi");
-  }
-
   function BlogProject(data) {
     console.log("Project edit: ", data);
   }
@@ -44,12 +42,13 @@ const ProjectPage = () => {
         <div className="p-4 border-b flex justify-between items-center">
           <h2 className="text-xl font-bold">Project Boshqaruvi</h2>
           <Button
-            className="px-6 py-4 rounded-lg shadow-md transition"
-            onClick={() => AddBlog()}
+            className="px-6 py-4 rounded-lg shadow-md transition hover:bg-green-500"
+            onClick={() => setOpenModal(true)}
           >
             Qo‘shish
           </Button>
         </div>
+        <Modal isOpen={openModal} onClose={() => setOpenModal(false)} />
         <Tablee
           data={data.data}
           onDelete={deleteProjets}
