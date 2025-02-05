@@ -42,7 +42,7 @@ const ProjectPage = () => {
         <div className="p-4 border-b flex justify-between items-center">
           <h2 className="text-xl font-bold">Project Boshqaruvi</h2>
           <Button
-            className="px-6 py-4 rounded-lg shadow-md transition hover:bg-green-500"
+            className="px-6 py-4 rounded-lg shadow-md transition-all bg-gradient-to-br from-black to-slate-500 hover:bg-gradient-to-br hover:from-slate-500 hover:to-black dark:bg-gradient-to-br dark:from-white dark:to-slate-600 dark:hover:bg-gradient-to-br dark:hover:from-slate-600 dark:hover:to-white"
             onClick={() => setOpenModal(true)}
           >
             Qo‘shish

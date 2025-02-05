@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { addImage, deleteImg } from "@/redux/slice/ImageSlice";
 import { useCreateNewsMutation } from "@/redux/api/newsApi";
+import { File } from "lucide-react";
 
 export default function Modal({ isOpen, onClose }) {
   const [createNews] = useCreateNewsMutation();
@@ -58,7 +59,7 @@ export default function Modal({ isOpen, onClose }) {
         <div className="grid grid-cols-1 w-[500px]">
           <div className="grid w-full items-center gap-1.5 my-3">
             <Label className="font-bold" htmlFor="text">
-              Sarlavha uz
+              Sarlavha o'zbekcha
             </Label>
             <Input
               type="text"
@@ -70,7 +71,7 @@ export default function Modal({ isOpen, onClose }) {
           </div>
           <div className="grid w-full items-center gap-1.5 my-3">
             <Label className="font-bold" htmlFor="text">
-              Sarlavha ru
+              Sarlavha ruscha
             </Label>
             <Input
               type="text"
@@ -82,7 +83,7 @@ export default function Modal({ isOpen, onClose }) {
           </div>
           <div className="grid w-full items-center gap-1.5 my-3">
             <Label className="font-bold " htmlFor="text">
-              Sarlavha en
+              Sarlavha inglizcha
             </Label>
             <Input
               type="text"
@@ -96,7 +97,7 @@ export default function Modal({ isOpen, onClose }) {
 
         <div className="grid w-full gap-1.5 my-3">
           <Label className="font-bold" htmlFor="message">
-            Tavsif uz
+            Tavsif o'zbekcha
           </Label>
           <Textarea
             placeholder="Tavsif yozing"
@@ -107,7 +108,7 @@ export default function Modal({ isOpen, onClose }) {
         </div>
         <div className="grid w-full gap-1.5 my-3">
           <Label className="font-bold" htmlFor="message">
-            Tavsif ru
+            Tavsif ruscha
           </Label>
           <Textarea
             placeholder="Tavsif yozing"
@@ -118,7 +119,7 @@ export default function Modal({ isOpen, onClose }) {
         </div>
         <div className="grid w-full gap-1.5 my-3">
           <Label className="font-bold" htmlFor="message">
-            Tavsif en
+            Tavsif inglizcha
           </Label>
           <Textarea
             placeholder="Tavsif yozing"
@@ -146,15 +147,18 @@ export default function Modal({ isOpen, onClose }) {
           <Label className="font-bold mt-5" htmlFor="text">
             Rasm yuklash
           </Label>
+          <div className="flex items-center gap-1">
+          <File />
           <Input onClick={()=>{
             dispatch(addImage());
           }} type="file" id="title" name="uploadImg" />
+          </div>
         </div>
         <div className="flex gap-5 my-5">
-          <Button className="hover:bg-red-500" onClick={onClose}>
+          <Button className="hover:bg-slate-700 dark:hover:bg-slate-400" onClick={onClose}>
             Yopish
           </Button>
-          <Button className="hover:bg-green-500" type="submit">
+          <Button className="hover:bg-slate-700 dark:hover:bg-slate-400" type="submit">
             Saqlash
           </Button>
         </div>

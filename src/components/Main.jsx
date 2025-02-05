@@ -60,7 +60,7 @@ export default function Main({ children }) {
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-40 border rounded shadow-lg">
                 <button
-                  className="w-full py-2 pe-2 ps-5 text-left  flex items-center gap-2"
+                  className="w-full py-2 pe-2 ps-5 text-left bg-white hover:bg-slate-200 transition-all dark:bg-black dark:hover:bg-gray-900 flex items-center gap-2"
                   onClick={handleLogout}
                 >
                   <LogOut /> Log Out
