@@ -2,23 +2,16 @@
 import React, { useState } from "react";
 import { Pencil, Trash2, Image, X } from "lucide-react";
 import { Toaster, toast } from "sonner";
-import { useDispatch } from "react-redux";
-import { authApi } from "@/redux/api/authApi";
+import EditModal from "./EditModal";
 
 const Tablee = ({ data, onDelete, onEdit }) => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
-  const dispatch = useDispatch();
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [content, setContent] = useState({});
 
-  const handleEdit = (item) => {
-    if (true) {
-      onEdit(item);
-    } else {
-      toast.info("Tahrirlash imkoniyati hozirda ishga tushirilmagan");
-    }
-  };
 
   const handleDeleteClick = (item) => {
     setItemToDelete(item);
@@ -113,11 +106,19 @@ const Tablee = ({ data, onDelete, onEdit }) => {
                   <td className="p-3">
                     <div className="flex justify-center gap-2">
                       <button
-                        onClick={() => handleEdit(item)}
+                        onClick={() => {
+                          setContent(item);
+                          setOpenEditModal(true);
+                        }}
                         className="p-1.5 hover:bg-blue-200 rounded-md hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />
                       </button>
+                      <EditModal
+                        isOpen={openEditModal}
+                        onClose={() => setOpenEditModal(false)}
+                        datas={content}
+                      />
                       <button
                         onClick={() => handleDeleteClick(item)}
                         className="p-1.5 hover:bg-red-200 rounded-md hover:text-red-600 transition-colors"
