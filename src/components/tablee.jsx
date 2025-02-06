@@ -4,7 +4,7 @@ import { Pencil, Trash2, Image, X } from "lucide-react";
 import { Toaster, toast } from "sonner";
 import EditModal from "./EditModal";
 
-const Tablee = ({ data, onDelete, onEdit }) => {
+const Tablee = ({ data, onEdit, handleDeleteConfirm }) => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -12,25 +12,9 @@ const Tablee = ({ data, onDelete, onEdit }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [content, setContent] = useState({});
 
-
   const handleDeleteClick = (item) => {
     setItemToDelete(item);
     setDeleteModalOpen(true);
-  };
-
-  const handleDeleteConfirm = async () => {
-    if (itemToDelete?.title) {
-      try {
-        setDeleteModalOpen(false);
-        await onDelete(itemToDelete.id);
-        const title = itemToDelete?.title?.uz || "";
-        toast.success(`${title} o'chirildi`);
-        window.location.reload();
-      } catch (error) {
-        setDeleteModalOpen(false);
-        toast.error("Qayta urinib ko'ring, xatolik yuz berdi");
-      }
-    }
   };
 
   const handleDeleteCancel = () => {
@@ -39,7 +23,6 @@ const Tablee = ({ data, onDelete, onEdit }) => {
 
   return (
     <div className="p-4 min-h-screen">
-      <Toaster position="top-right" />
       <div className="rounded-lg shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -215,7 +198,9 @@ const Tablee = ({ data, onDelete, onEdit }) => {
                 Yo'q
               </button>
               <button
-                onClick={handleDeleteConfirm}
+                onClick={() =>
+                  handleDeleteConfirm(itemToDelete, setDeleteModalOpen)
+                }
                 className="px-4 py-1.5 bg-red-600 text-white text-sm hover:bg-red-700 rounded-md transition-colors"
               >
                 Ha
