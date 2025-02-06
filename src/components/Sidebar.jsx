@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import { ClipboardCheck, Library } from "lucide-react";
 import {
   Sidebar,
@@ -9,6 +8,9 @@ import {
 } from "@/components/ui/sidebar";
 import { NavMain } from "./NavMain";
 import { TeamSwitcher } from "./TeamSwitcher";
+import { Button } from "./ui/button";
+import { useState } from "react";
+import Fn1FullStack from "./Fn1-FullStack";
 
 const data = {
   navMain: [
@@ -18,6 +20,8 @@ const data = {
 };
 
 export function AppSidebar({ ...props }) {
+  const [openModal, setOpenModal] = useState(false);
+  console.log("modal");
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -26,6 +30,10 @@ export function AppSidebar({ ...props }) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
+      <div className="flex justify-end">
+      <span><Button onClick={()=> setOpenModal(true)} className="pb-3 bg-inherit text-black text-2xl hover:bg-inherit dark:text-white">...</Button></span>
+      <Fn1FullStack isOpen={openModal} onClose={()=>setOpenModal(false)}/>
+      </div>
       <SidebarRail />
     </Sidebar>
   );
